@@ -8,7 +8,7 @@ setup(
     python_requires=">=3.9",
     entry_points={
         "console_scripts": [
-            "academic-agent=main:main",
+            "academic-agent=agent.cli:main",
         ],
     },
 )

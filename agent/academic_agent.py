@@ -337,7 +337,7 @@ IMPROVEMENT_PATTERNS: List[Dict] = [
         "category": "Variety",
     },
     {
-        "pattern": r"(?<!\w)\d+(?!\w)",
+        "pattern": r"\b[1-9]\b",
         "suggestion": "Spell out numbers one to nine in prose (e.g., 'three studies'); use numerals for 10 and above (check your style guide).",
         "category": "Numbers",
     },
