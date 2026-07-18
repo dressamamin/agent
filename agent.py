@@ -5,8 +5,6 @@ Searches for job listings and returns formatted results.
 
 import re
 import sys
-import time
-import urllib.parse
 from dataclasses import dataclass, field
 from typing import List, Optional
 
@@ -62,7 +60,7 @@ class JobAgent:
                     if len(results) >= limit:
                         break
                 except Exception as exc:  # noqa: BLE001
-                    console.print(f"[yellow]Warning: {source} search failed – {exc}[/yellow]")
+                    console.print(f"[yellow]Warning: {source} search failed – {str(exc)}[/yellow]")
         return results[:limit]
 
     # ------------------------------------------------------------------
@@ -70,7 +68,7 @@ class JobAgent:
     # ------------------------------------------------------------------
     def _search_remotive(self, query: str, location: str, limit: int) -> List[JobResult]:
         url = "https://remotive.com/api/remote-jobs"
-        params: dict = {"search": query, "limit": limit}
+        params = {"search": query, "limit": limit}
         resp = requests.get(url, params=params, headers=HEADERS, timeout=15)
         resp.raise_for_status()
         data = resp.json()
@@ -94,7 +92,7 @@ class JobAgent:
     # ------------------------------------------------------------------
     def _search_arbeitnow(self, query: str, location: str, limit: int) -> List[JobResult]:
         url = "https://www.arbeitnow.com/api/job-board-api"
-        params: dict = {"search": query}
+        params = {"search": query}
         if location:
             params["location"] = location
         resp = requests.get(url, params=params, headers=HEADERS, timeout=15)
@@ -117,7 +115,7 @@ class JobAgent:
 
 
 def _strip_html(html: str) -> str:
-    """Remove HTML tags and normalise whitespace."""
+    """Remove HTML tags and normalize whitespace."""
     text = BeautifulSoup(html, "html.parser").get_text(separator=" ")
     return re.sub(r"\s+", " ", text).strip()
 
